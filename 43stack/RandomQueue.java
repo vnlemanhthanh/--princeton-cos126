@@ -1,4 +1,10 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class RandomQueue<Item> implements Iterable<Item> {
     private static final int INIT_CAPACITY = 2;
@@ -61,6 +67,34 @@ public class RandomQueue<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return null;
+        return new RandomIterator();
+    }
+
+    private class RandomIterator implements Iterator<Item> {
+        private RandomQueue<Item> copy = new RandomQueue();
+
+        public RandomIterator() {
+            for(int var2 = 0; var2 < RandomQueue.this.N; ++var2) {
+                this.copy.enqueue(RandomQueue.this.a[var2]);
+            }
+
+        }
+
+        public boolean hasNext() {
+            return !this.copy.isEmpty();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        public Item next() {
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                return this.copy.dequeue();
+            }
+        }
     }
 }
+
